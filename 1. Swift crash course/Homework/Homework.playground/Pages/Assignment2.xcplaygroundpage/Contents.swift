@@ -13,24 +13,50 @@ class Node {
     }
     
     var maximum: Int {
-        // Search all children recursively and return the maximum 'value'
-        return 0
+        var toSearch: [Node] = self.children
+        var max = self.value
+        while(toSearch.count>0){
+            if(toSearch[0].value>max){
+                max = toSearch[0].value
+            }
+            if(toSearch[0].children.count>0){
+                toSearch.append(contentsOf: toSearch[0].children)
+            }
+            toSearch.remove(at:0)
+        }
+        return max
     }
     
     func append(node: Node) {
         // Implement appending node to the children array
+        self.children.append(node)
     }
     
     func removeNode(at index: Int) -> Node? {
         // Remove a child at given index
         // Do not crash when the index is out of range
         // Return a removed Node if any node was removed
-        return nil
+        if(index<self.children.count){
+            let x: Node = children[index]
+            self.children.remove(at: index)
+            return x
+        } else{
+            return nil
+        }
     }
     
     func sortedValues() -> [Int] {
-        // Search all children recursively and return a sorted array of all values from the whole tree
-        return []
+        var toSearch: [Node] = self.children
+        var values: [Int] = [self.value]
+        while(toSearch.count>0){
+            values.append(toSearch[0].value)
+            if(toSearch[0].children.count>0){
+                toSearch.append(contentsOf: toSearch[0].children)
+            }
+            toSearch.remove(at:0)
+        }
+        values.sort()
+        return values
     }
 }
 
@@ -54,9 +80,7 @@ let tree = Node(
     ])
 
 tree.children[0].append(node: Node(value: 2048, children: []))
-
 tree.maximum == 2048 // MUST BE TRUE
 tree.sortedValues() == [-5, 2, 2, 7, 48, 99, 103, 2048] // MUST BE TRUE
-
 _ = tree.removeNode(at: 0)
 tree.maximum == 103 // MUST BE TRUE
