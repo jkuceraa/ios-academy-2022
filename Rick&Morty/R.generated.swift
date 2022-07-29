@@ -552,6 +552,26 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
+  /// This `R.nib` struct is generated, and contains static references to 1 nibs.
+  struct nib {
+    /// Nib `LocationListItemCell`.
+    static let locationListItemCell = _R.nib._LocationListItemCell()
+
+    #if os(iOS) || os(tvOS)
+    /// `UINib(name: "LocationListItemCell", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.locationListItemCell) instead")
+    static func locationListItemCell(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.locationListItemCell)
+    }
+    #endif
+
+    static func locationListItemCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationListItemCell? {
+      return R.nib.locationListItemCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationListItemCell
+    }
+
+    fileprivate init() {}
+  }
+
   /// This `R.string` struct is generated, and contains static references to 1 localization tables.
   struct string {
     /// This `R.string.localizable` struct is generated, and contains static references to 11 localization keys.
@@ -747,6 +767,23 @@ struct _R: Rswift.Validatable {
     try storyboard.validate()
     #endif
   }
+
+  #if os(iOS) || os(tvOS)
+  struct nib {
+    struct _LocationListItemCell: Rswift.NibResourceType {
+      let bundle = R.hostingBundle
+      let name = "LocationListItemCell"
+
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationListItemCell? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationListItemCell
+      }
+
+      fileprivate init() {}
+    }
+
+    fileprivate init() {}
+  }
+  #endif
 
   #if os(iOS) || os(tvOS)
   struct storyboard: Rswift.Validatable {

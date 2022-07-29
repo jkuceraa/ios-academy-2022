@@ -15,13 +15,38 @@
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="73X-BY-gnA">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Y6W-OH-hqX" id="PLa-Lv-DK3"/>
+                                </connections>
+                            </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" id="URI-kO-0S1">
+                                <rect key="frame" x="0.0" y="426" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="73X-BY-gnA" secondAttribute="bottom" id="C5P-2l-dmh"/>
+                            <constraint firstItem="73X-BY-gnA" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="M5e-hm-gJ4"/>
+                            <constraint firstItem="73X-BY-gnA" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="NHW-bD-nG3"/>
+                            <constraint firstItem="URI-kO-0S1" firstAttribute="centerX" secondItem="73X-BY-gnA" secondAttribute="centerX" id="QZT-XH-2ur"/>
+                            <constraint firstItem="URI-kO-0S1" firstAttribute="centerY" secondItem="73X-BY-gnA" secondAttribute="centerY" id="j16-f2-jLd"/>
+                            <constraint firstItem="73X-BY-gnA" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="lVv-dq-MPx"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="URI-kO-0S1" id="Eik-Rx-j0R"/>
+                        <outlet property="tableView" destination="73X-BY-gnA" id="aCP-VZ-XKt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136" y="106"/>
+            <point key="canvasLocation" x="134.78260869565219" y="105.80357142857143"/>
         </scene>
     </scenes>
     <resources>
