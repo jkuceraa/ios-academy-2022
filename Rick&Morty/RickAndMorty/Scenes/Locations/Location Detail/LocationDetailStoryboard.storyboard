@@ -15,9 +15,27 @@
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="9mh-7Q-S5a">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="876"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Y6W-OH-hqX" id="rkF-TV-RSg"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="9mh-7Q-S5a" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="658-rV-lxt"/>
+                            <constraint firstAttribute="trailing" secondItem="9mh-7Q-S5a" secondAttribute="trailing" id="KlZ-f1-Zo5"/>
+                            <constraint firstAttribute="bottom" secondItem="9mh-7Q-S5a" secondAttribute="bottom" constant="20" symbolic="YES" id="fvQ-mT-WKh"/>
+                            <constraint firstItem="9mh-7Q-S5a" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="yYz-0t-TTL"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="9mh-7Q-S5a" id="DH7-yZ-s3E"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

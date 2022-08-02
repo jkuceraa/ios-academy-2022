@@ -552,10 +552,30 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.nib` struct is generated, and contains static references to 1 nibs.
+  /// This `R.nib` struct is generated, and contains static references to 3 nibs.
   struct nib {
+    /// Nib `LocationDetailCell`.
+    static let locationDetailCell = _R.nib._LocationDetailCell()
+    /// Nib `LocationDetailCharacterCell`.
+    static let locationDetailCharacterCell = _R.nib._LocationDetailCharacterCell()
     /// Nib `LocationsListItemCell`.
     static let locationsListItemCell = _R.nib._LocationsListItemCell()
+
+    #if os(iOS) || os(tvOS)
+    /// `UINib(name: "LocationDetailCell", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.locationDetailCell) instead")
+    static func locationDetailCell(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.locationDetailCell)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UINib(name: "LocationDetailCharacterCell", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.locationDetailCharacterCell) instead")
+    static func locationDetailCharacterCell(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.locationDetailCharacterCell)
+    }
+    #endif
 
     #if os(iOS) || os(tvOS)
     /// `UINib(name: "LocationsListItemCell", in: bundle)`
@@ -564,6 +584,14 @@ struct R: Rswift.Validatable {
       return UIKit.UINib(resource: R.nib.locationsListItemCell)
     }
     #endif
+
+    static func locationDetailCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationDetailCell? {
+      return R.nib.locationDetailCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationDetailCell
+    }
+
+    static func locationDetailCharacterCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationDetailCharacterCell? {
+      return R.nib.locationDetailCharacterCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationDetailCharacterCell
+    }
 
     static func locationsListItemCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationsListItemCell? {
       return R.nib.locationsListItemCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationsListItemCell
@@ -770,6 +798,28 @@ struct _R: Rswift.Validatable {
 
   #if os(iOS) || os(tvOS)
   struct nib {
+    struct _LocationDetailCell: Rswift.NibResourceType {
+      let bundle = R.hostingBundle
+      let name = "LocationDetailCell"
+
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationDetailCell? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationDetailCell
+      }
+
+      fileprivate init() {}
+    }
+
+    struct _LocationDetailCharacterCell: Rswift.NibResourceType {
+      let bundle = R.hostingBundle
+      let name = "LocationDetailCharacterCell"
+
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationDetailCharacterCell? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationDetailCharacterCell
+      }
+
+      fileprivate init() {}
+    }
+
     struct _LocationsListItemCell: Rswift.NibResourceType {
       let bundle = R.hostingBundle
       let name = "LocationsListItemCell"
