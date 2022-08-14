@@ -94,8 +94,8 @@ struct R: Rswift.Validatable {
   struct storyboard {
     /// Storyboard `LaunchScreen`.
     static let launchScreen = _R.storyboard.launchScreen()
-    /// Storyboard `LocationDetailStoryboard`.
-    static let locationDetailStoryboard = _R.storyboard.locationDetailStoryboard()
+    /// Storyboard `LocationDetailViewController`.
+    static let locationDetailViewController = _R.storyboard.locationDetailViewController()
     /// Storyboard `LocationsListViewController`.
     static let locationsListViewController = _R.storyboard.locationsListViewController()
 
@@ -107,9 +107,9 @@ struct R: Rswift.Validatable {
     #endif
 
     #if os(iOS) || os(tvOS)
-    /// `UIStoryboard(name: "LocationDetailStoryboard", bundle: ...)`
-    static func locationDetailStoryboard(_: Void = ()) -> UIKit.UIStoryboard {
-      return UIKit.UIStoryboard(resource: R.storyboard.locationDetailStoryboard)
+    /// `UIStoryboard(name: "LocationDetailViewController", bundle: ...)`
+    static func locationDetailViewController(_: Void = ()) -> UIKit.UIStoryboard {
+      return UIKit.UIStoryboard(resource: R.storyboard.locationDetailViewController)
     }
     #endif
 
@@ -552,28 +552,38 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.nib` struct is generated, and contains static references to 3 nibs.
+  /// This `R.nib` struct is generated, and contains static references to 4 nibs.
   struct nib {
-    /// Nib `LocationDetailCell`.
-    static let locationDetailCell = _R.nib._LocationDetailCell()
-    /// Nib `LocationDetailCharacterCell`.
-    static let locationDetailCharacterCell = _R.nib._LocationDetailCharacterCell()
+    /// Nib `LocationDetailHeaderView`.
+    static let locationDetailHeaderView = _R.nib._LocationDetailHeaderView()
+    /// Nib `LocationDetailInfoCell`.
+    static let locationDetailInfoCell = _R.nib._LocationDetailInfoCell()
+    /// Nib `LocationDetailResidentCell`.
+    static let locationDetailResidentCell = _R.nib._LocationDetailResidentCell()
     /// Nib `LocationsListItemCell`.
     static let locationsListItemCell = _R.nib._LocationsListItemCell()
 
     #if os(iOS) || os(tvOS)
-    /// `UINib(name: "LocationDetailCell", in: bundle)`
-    @available(*, deprecated, message: "Use UINib(resource: R.nib.locationDetailCell) instead")
-    static func locationDetailCell(_: Void = ()) -> UIKit.UINib {
-      return UIKit.UINib(resource: R.nib.locationDetailCell)
+    /// `UINib(name: "LocationDetailHeaderView", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.locationDetailHeaderView) instead")
+    static func locationDetailHeaderView(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.locationDetailHeaderView)
     }
     #endif
 
     #if os(iOS) || os(tvOS)
-    /// `UINib(name: "LocationDetailCharacterCell", in: bundle)`
-    @available(*, deprecated, message: "Use UINib(resource: R.nib.locationDetailCharacterCell) instead")
-    static func locationDetailCharacterCell(_: Void = ()) -> UIKit.UINib {
-      return UIKit.UINib(resource: R.nib.locationDetailCharacterCell)
+    /// `UINib(name: "LocationDetailInfoCell", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.locationDetailInfoCell) instead")
+    static func locationDetailInfoCell(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.locationDetailInfoCell)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UINib(name: "LocationDetailResidentCell", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.locationDetailResidentCell) instead")
+    static func locationDetailResidentCell(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.locationDetailResidentCell)
     }
     #endif
 
@@ -585,12 +595,16 @@ struct R: Rswift.Validatable {
     }
     #endif
 
-    static func locationDetailCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationDetailCell? {
-      return R.nib.locationDetailCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationDetailCell
+    static func locationDetailHeaderView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationDetailHeaderView? {
+      return R.nib.locationDetailHeaderView.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationDetailHeaderView
     }
 
-    static func locationDetailCharacterCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationDetailCharacterCell? {
-      return R.nib.locationDetailCharacterCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationDetailCharacterCell
+    static func locationDetailInfoCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationDetailInfoCell? {
+      return R.nib.locationDetailInfoCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationDetailInfoCell
+    }
+
+    static func locationDetailResidentCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationDetailResidentCell? {
+      return R.nib.locationDetailResidentCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationDetailResidentCell
     }
 
     static func locationsListItemCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationsListItemCell? {
@@ -798,23 +812,34 @@ struct _R: Rswift.Validatable {
 
   #if os(iOS) || os(tvOS)
   struct nib {
-    struct _LocationDetailCell: Rswift.NibResourceType {
+    struct _LocationDetailHeaderView: Rswift.NibResourceType {
       let bundle = R.hostingBundle
-      let name = "LocationDetailCell"
+      let name = "LocationDetailHeaderView"
 
-      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationDetailCell? {
-        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationDetailCell
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationDetailHeaderView? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationDetailHeaderView
       }
 
       fileprivate init() {}
     }
 
-    struct _LocationDetailCharacterCell: Rswift.NibResourceType {
+    struct _LocationDetailInfoCell: Rswift.NibResourceType {
       let bundle = R.hostingBundle
-      let name = "LocationDetailCharacterCell"
+      let name = "LocationDetailInfoCell"
 
-      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationDetailCharacterCell? {
-        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationDetailCharacterCell
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationDetailInfoCell? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationDetailInfoCell
+      }
+
+      fileprivate init() {}
+    }
+
+    struct _LocationDetailResidentCell: Rswift.NibResourceType {
+      let bundle = R.hostingBundle
+      let name = "LocationDetailResidentCell"
+
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LocationDetailResidentCell? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LocationDetailResidentCell
       }
 
       fileprivate init() {}
@@ -842,7 +867,7 @@ struct _R: Rswift.Validatable {
       try launchScreen.validate()
       #endif
       #if os(iOS) || os(tvOS)
-      try locationDetailStoryboard.validate()
+      try locationDetailViewController.validate()
       #endif
       #if os(iOS) || os(tvOS)
       try locationsListViewController.validate()
@@ -866,11 +891,11 @@ struct _R: Rswift.Validatable {
     #endif
 
     #if os(iOS) || os(tvOS)
-    struct locationDetailStoryboard: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
+    struct locationDetailViewController: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = LocationDetailViewController
 
       let bundle = R.hostingBundle
-      let name = "LocationDetailStoryboard"
+      let name = "LocationDetailViewController"
 
       static func validate() throws {
         if #available(iOS 11.0, tvOS 11.0, *) {

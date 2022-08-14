@@ -2,41 +2,58 @@
 //  LocationDetailViewController.swift
 //  RickAndMorty
 //
-//  Created by Filip Haskovec on 26.07.2022.
+//  Created by Jan Schwarz on 19.05.2022.
 //  Copyright © 2022 STRV. All rights reserved.
 //
 
 import UIKit
 
-final class LocationDetailViewController: UIViewController {
-    
-    @IBOutlet var tableView: UITableView!
-    
+class LocationDetailViewController: UIViewController {
+    enum Section: Int, CaseIterable {
+        case info = 0
+        case residents = 1
+
+        var header: String {
+            switch self {
+            case .info:
+                return R.string.localizable.locationDetailInfo()
+            case .residents:
+                return R.string.localizable.locationDetailResidents()
+            }
+        }
+    }
+
+    enum InfoRow: Int {
+        case name = 0
+        case type = 1
+        case dimension = 2
+    }
+
+    @IBOutlet private var tableView: UITableView!
+    @IBOutlet private var loadingIndicator: UIActivityIndicatorView!
+
     private lazy var backgroundView: UIView = {
         let view = UIBackgroundGradientView()
-        view.backgroundColor = .appBackgroundGradientTop
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    private let characters: [Character] = {
+
+    // #swiftlint:disable:next implicitly_unwrapped_optional
+    var location: Location!
+
+    private let residents: [Character] = {
         // Initialize with 100 Character mocks.
         (0...99).map { _ in
             Character.mock
         }
     }()
-    
-    private let location: Location = {
-        Location.mock
-    }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
         setup()
+        configure(for: location)
     }
-    
-    
-    
 }
 
 // MARK: - Setup
@@ -47,66 +64,98 @@ private extension LocationDetailViewController {
 
     func setupView() {
         view.insertSubview(backgroundView, at: 0)
-        tableView.backgroundColor = .appBackgroundGradientTop
-        tableView.register(LocationDetailCharacterCell.self)
-        tableView.register(LocationDetailCell.self)
+        view.addConstraints([
+            view.topAnchor.constraint(equalTo: backgroundView.topAnchor),
+            view.rightAnchor.constraint(equalTo: backgroundView.rightAnchor),
+            view.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor),
+            view.leftAnchor.constraint(equalTo: backgroundView.leftAnchor)
+        ])
+
+        loadingIndicator.color = .appTintNavigationBar
+
+        tableView.register(LocationDetailHeaderView.self)
+        tableView.register(LocationDetailInfoCell.self)
+        tableView.register(LocationDetailResidentCell.self)
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.tableHeaderView = UIView()
+    }
+
+    func configure(for location: Location) {
+        navigationItem.title = location.name
+
+        self.tableView.reloadData()
     }
 }
 
-// MARK: - Table view data source
+// MARK: - Table view data source & delegate
 extension LocationDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in _: UITableView) -> Int {
-        2
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 40))
-        let label = UILabel()
-        label.frame = CGRect.init(x: 15, y: 0, width: headerView.frame.width-10, height: headerView.frame.height-10)
-        label.dynamicFont = .appSectionTitle
-        label.textColor = .appTextSectionTitle
-        headerView.backgroundColor = .appBackgroundGradientTop
-        label.backgroundColor = .appBackgroundGradientTop
-        
-        switch(section){
-        case 0:
-            label.text = "Information"
-        case 1:
-            label.text = "Residents"
-        default:
-            label.text = "Error"
-        }
-                
-        headerView.addSubview(label)
-                
-        return headerView
+        Section.allCases.count
     }
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch(section){
-        case 0:
-            return 1
-        case 1:
-            return characters.count
-        default:
+        guard let section = Section(rawValue: section) else {
             return 0
+        }
+
+        switch section {
+        case .info:
+            return 3
+        case .residents:
+            return residents.count
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if(indexPath.section==0){
-            let cell: LocationDetailCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.configure(with: location)
-            return cell
-        } else{
-            let cell: LocationDetailCharacterCell = tableView.dequeueReusableCell(for: indexPath)
-            let character = characters[indexPath.row]
+        guard let section = Section(rawValue: indexPath.section) else {
+            return UITableViewCell()
+        }
 
-            cell.configure(with: character)
+        switch section {
+        case .info:
+            let cell: LocationDetailInfoCell = tableView.dequeueReusableCell(for: indexPath)
+
+            configure(locationInfoCell: cell, for: indexPath.row)
+
+            return cell
+        case .residents:
+            let cell: LocationDetailResidentCell = tableView.dequeueReusableCell(for: indexPath)
+            let resident = residents[indexPath.row]
+
+            cell.configure(with: resident)
 
             return cell
         }
+    }
+
+    func configure(locationInfoCell: LocationDetailInfoCell, for row: Int) {
+        guard
+            let row = InfoRow(rawValue: row)
+        else {
+            locationInfoCell.configure(with: nil, title: "")
+            return
+        }
+
+        switch row {
+        case .name:
+            locationInfoCell.configure(with: .systemInfoCircle, title: location.name)
+        case .type:
+            locationInfoCell.configure(with: .systemGlobe, title: location.type)
+        case .dimension:
+            locationInfoCell.configure(with: .systemRays, title: location.dimension)
+        }
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let section = Section(rawValue: section) else {
+            return nil
+        }
+
+        let view: LocationDetailHeaderView = tableView.dequeueHeaderFooterView()
+
+        view.configure(with: section.header)
+
+        return view
     }
 }
