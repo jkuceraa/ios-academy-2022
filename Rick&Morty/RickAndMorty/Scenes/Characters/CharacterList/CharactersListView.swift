@@ -10,6 +10,7 @@ import SwiftUI
 
 struct CharactersListView: View {
     @State private var mode: Mode = .list
+    weak var coordinator: CharactersCoordinator?
     
     let gridColumns: [GridItem] = Array(
         repeating: GridItem(.flexible(), spacing: 10),
@@ -49,6 +50,9 @@ struct CharactersListView: View {
         LazyVStack(alignment: .leading, spacing: 12) {
             ForEach(Character.characters) { character in
                 CharacterRowItemView(character: character)
+                    .onTapGesture {
+                        print("Go to character detail")
+                    }
             }
         }
         .padding(.horizontal, 16)
@@ -59,6 +63,9 @@ struct CharactersListView: View {
         LazyVGrid(columns: gridColumns, spacing: 10) {
             ForEach(Character.characters) { character in
                 CharacterGridItemView(character: character)
+                    .onTapGesture {
+                        print("Go to character detail")
+                    }
             }
         }
         .padding(.horizontal, 10)
