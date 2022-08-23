@@ -9,8 +9,13 @@
 import SwiftUI
 
 struct CharactersListView: View {
+    enum Event {
+        case didSelectCharacter(character: Character)
+    }
+    
     @State private var mode: Mode = .list
-    weak var coordinator: CharactersCoordinator?
+    
+    weak var coordinator: CharactersListEventHandling?
     
     let gridColumns: [GridItem] = Array(
         repeating: GridItem(.flexible(), spacing: 10),
@@ -51,7 +56,7 @@ struct CharactersListView: View {
             ForEach(Character.characters) { character in
                 CharacterRowItemView(character: character)
                     .onTapGesture {
-                        print("Go to character detail")
+                        coordinator?.handle(event: .didSelectCharacter(character: character))
                     }
             }
         }
@@ -64,7 +69,7 @@ struct CharactersListView: View {
             ForEach(Character.characters) { character in
                 CharacterGridItemView(character: character)
                     .onTapGesture {
-                        print("Go to character detail")
+                        coordinator?.handle(event: .didSelectCharacter(character: character))
                     }
             }
         }
